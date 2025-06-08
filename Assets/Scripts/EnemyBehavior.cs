@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class EnemyCode : MonoBehaviour
+public class EnemyBehavior : MonoBehaviour
 {
-    public Transform enemy;
+    public float health;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -12,6 +12,9 @@ public class EnemyCode : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
