@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
     private Vector3 startSpawnPosition = new Vector3(-3f, 0f, 12f);
     private float horizontalSpacing = 1.5f;
     private float zSpacing = 0f;
+    private int enemyCounter;
 
     private bool hasStartedSpawning = false;
 
@@ -35,7 +36,13 @@ public class EnemySpawner : MonoBehaviour
     {
         for (int i = 0; i < numberOfEnemies; i++)
         {
-            Vector3 spawnPosition = startSpawnPosition + new Vector3(horizontalSpacing * i, 0f, 0f);
+            enemyCounter++;
+            if(i==3)
+            {
+                enemyCounter=0;
+                startSpawnPosition = new Vector3(-1.5f, 0f, 10f);
+            }
+            Vector3 spawnPosition = startSpawnPosition + new Vector3(horizontalSpacing * enemyCounter, 0f, 0f);
 
             GameObject spawnedEnemy = Instantiate(enemy, spawnPosition, Quaternion.identity);
 
