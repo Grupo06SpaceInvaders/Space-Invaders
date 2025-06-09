@@ -65,6 +65,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void FixedUpdate()
     {
+        speed = speed + (speedIncrease * GlobalVariables.enemyKilled);
         Rigidbody enemys_rigidBody = gameObject.GetComponent<Rigidbody>();
 
         if (gameObject.transform.position.x > (movementVariation + enemyMasterInitialPosition.x)) { directionMovement = Vector3.left; }

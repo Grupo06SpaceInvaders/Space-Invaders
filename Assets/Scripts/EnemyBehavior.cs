@@ -14,6 +14,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (health <= 0)
         {
+            GlobalVariables.enemyKilled++;
             Destroy(this.gameObject);
         }
     }
