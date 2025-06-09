@@ -26,6 +26,10 @@ public class EnemySpawner : MonoBehaviour
     private Vector3 enemySpawnPostion = new Vector3(-17, 0, 9);
     private Vector3 enemyMasterInitialPosition = new Vector3(0, 0, 0);
     private Vector3 directionMovement;
+    private Vector3 startSpawnPosition = new Vector3(-3f, 0f, 12f);
+    private float horizontalSpacing = 1.5f;
+    private float zSpacing = 0f;
+    private int enemyCounter;
 
     private void Start()
     {
@@ -106,7 +110,20 @@ public class EnemySpawner : MonoBehaviour
     {
         for (int i = 0; i < enemys.Count; i++)
         {
-            enemys[i].transform.position += new Vector3(0, 0, -verticalSpacing);
+            enemyCounter++;
+            if(i==3)
+            {
+                enemyCounter=0;
+                startSpawnPosition = new Vector3(-1.5f, 0f, 10f);
+            }
+            Vector3 spawnPosition = startSpawnPosition + new Vector3(horizontalSpacing * enemyCounter, 0f, 0f);
+
+            GameObject spawnedEnemy = Instantiate(enemy, spawnPosition, Quaternion.identity);
+
+            EnemyCode enemySpawned = spawnedEnemy.GetComponent<EnemyCode>();
+            enemySpawned.enemy = enemy.transform;
+            
+            yield return new WaitForSeconds(spawnInterval);
         }
         yield return new WaitForEndOfFrame();
     }
