@@ -17,6 +17,9 @@ public class ShootBehavior : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log(gameObject.name + " colidiu com " + other.gameObject.name);
+        if (other.gameObject.tag == "Player")
+        {
+            Debug.Log(gameObject.name + " colidiu com " + other.gameObject.name);
+        }
     }
 }

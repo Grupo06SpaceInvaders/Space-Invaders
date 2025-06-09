@@ -1,16 +1,48 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using System;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemy;
-    private int numberOfEnemies = 6;
+    public GameObject[] enemys_PreFab;
+    public GameObject shoot_PreFab;
+    private GameObject Player;
+    public float initialSpeed;
+    public float speedIncrease;
+    public float movementVariation = 3f;
+    public int ColEnemyQTD = 11;
+    public int RowEnemyQTD = 5;
+    public int bulletSpeed = 25;
+    public float bulletDamage = 25;
+    public float fowardInterval = 20f;
+    public float shootInterval = 2f;
+    public float shootSpeedIncrease = 0.1f;
+    public float quantEnemy;
 
-    private Vector3 startSpawnPosition = new Vector3(-3f, 0f, 12f);
-    private float horizontalSpacing = 1.5f;
-    private float zSpacing = 0f;
+    public float verticalWidth = 8f;
 
-    private bool hasStartedSpawning = false;
+    private float speed, cooldown, shootColdown, shootIncreaseVelocity, shootIncreaseCooldown;
+    private List<GameObject> enemys;
+    private float horizontalSpacing, verticalSpacing;
+    private Vector3 enemySpawnPostion = new Vector3(-17, 0, 9);
+    private Vector3 enemyMasterInitialPosition = new Vector3(0, 0, 0);
+    private Vector3 directionMovement;
+
+    private void Start()
+    {
+        directionMovement = Vector3.left;
+        speed = initialSpeed;
+        horizontalSpacing = 34f / ColEnemyQTD;
+        verticalSpacing = verticalWidth / RowEnemyQTD;
+        enemys = new List<GameObject>();
+        cooldown = fowardInterval;
+        bulletSpeed = bulletSpeed * 100;
+        shootIncreaseVelocity = 10;
+        shootIncreaseCooldown = shootIncreaseVelocity;
+
+        Player = GameObject.FindGameObjectWithTag("Player");
 
     private float spawnInterval = 0.01f;
 
@@ -20,37 +52,87 @@ public class EnemySpawner : MonoBehaviour
     {
         if (GlobalVariables.enemyKilled % 6==0)
         {
-            hasStartedSpawning = false;
+            for (int j = 0; j < ColEnemyQTD; j++)
+            {
+                GameObject enemy = Instantiate(enemys_PreFab[i], gameObject.transform);
+                enemys.Add(enemy);
+
+                enemy.transform.position = enemySpawnPostion + new Vector3(horizontalSpacing * j + 1, 0, -verticalSpacing * i);
+            }
         }
     }
 
     void OnEnable()
     {
-        if (!hasStartedSpawning)
+        Rigidbody enemys_rigidBody = gameObject.GetComponent<Rigidbody>();
+
+        if (gameObject.transform.position.x > (movementVariation + enemyMasterInitialPosition.x)) { directionMovement = Vector3.left; }
+        if (gameObject.transform.position.x < (-movementVariation + enemyMasterInitialPosition.x)) { directionMovement = Vector3.right; }
+        enemys_rigidBody.AddForce(speed * directionMovement);
+        speed += speedIncrease * Time.deltaTime;
+
+        quantEnemy = enemys.Count;
+
+
+        //Cooldowns
+
+        shootIncreaseCooldown -= Time.deltaTime;
+        if (shootIncreaseCooldown <= 0)
         {
-            StartCoroutine(SpawnEnemies());
-            hasStartedSpawning = true;
+            shootInterval -= shootSpeedIncrease;
+            shootIncreaseCooldown = shootIncreaseVelocity;
+        }
+
+        shootColdown -= Time.deltaTime;
+        if (enemys.Count > 0)
+        {
+            if (shootColdown <= 0)
+            {
+                shootColdown = shootInterval;
+                StartCoroutine(SpawnBullet());
+            }
+        }
+
+
+        cooldown -= Time.deltaTime;
+        if (cooldown <= 0)
+        {
+            StartCoroutine(ChangeEnemyRol());
+            cooldown = fowardInterval;
         }
     }
 
-    IEnumerator SpawnEnemies()
+    IEnumerator SpawnBullet()
     {
-        for (int i = 0; i < numberOfEnemies; i++)
+        enemys.RemoveAll(enemy => enemy == null);
+        float closerEnemy = Vector3.Distance(enemys[0].transform.position, Player.transform.position);
+        int enemyToShoot = 0;
+        for (int i = 0; i < enemys.Count; i++)
         {
-            enemyCounter++;
-            if (i == 3)
+            float distance = Vector3.Distance(enemys[i].transform.position, Player.transform.position);
+            if (distance < closerEnemy)
             {
-                enemyCounter = 0;
-                startSpawnPosition = new Vector3(-3f, 0f, 12f);
+                closerEnemy = distance;
+                enemyToShoot = i;
             }
-            Vector3 spawnPosition = startSpawnPosition + new Vector3(horizontalSpacing * i, 0f, 0f);
-
-            GameObject spawnedEnemy = Instantiate(enemy, spawnPosition, Quaternion.identity);
-
-            //EnemyCode enemySpawned = spawnedEnemy.GetComponent<EnemyCode>();
-            //enemySpawned.enemy = enemy.transform;
-
-            yield return new WaitForSeconds(spawnInterval);
         }
+
+        GameObject shoot = Instantiate(shoot_PreFab);
+        shoot.transform.position = enemys[enemyToShoot].transform.position;
+        shoot.transform.LookAt(-Vector3.forward + shoot.transform.position);
+        shoot.GetComponent<ShootBehavior>().damage = bulletDamage;
+        shoot.GetComponent<Rigidbody>().AddForce(-Vector3.forward * bulletSpeed);
+
+        yield return new WaitForSeconds(3);
+        try
+        {
+            Destroy(shoot.gameObject);
+        }
+        finally
+        {
+
+        }
+
+    }
     }
 }
