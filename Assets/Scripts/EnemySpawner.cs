@@ -3,11 +3,13 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using System;
 
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject[] enemys_PreFab;
     public GameObject shoot_PreFab;
+    private GameObject Player;
     public float initialSpeed;
     public float speedIncrease;
     public float movementVariation = 3f;
@@ -20,7 +22,9 @@ public class EnemySpawner : MonoBehaviour
     public float shootSpeedIncrease = 0.1f;
     public float quantEnemy;
 
-    private float speed, cooldown, shootColdown;
+    public float verticalWidth = 8f;
+
+    private float speed, cooldown, shootColdown, shootIncreaseVelocity, shootIncreaseCooldown;
     private List<GameObject> enemys;
     private float horizontalSpacing, verticalSpacing;
     private Vector3 enemySpawnPostion = new Vector3(-17, 0, 9);
@@ -32,10 +36,14 @@ public class EnemySpawner : MonoBehaviour
         directionMovement = Vector3.left;
         speed = initialSpeed;
         horizontalSpacing = 34f / ColEnemyQTD;
-        verticalSpacing = 10f / RowEnemyQTD;
+        verticalSpacing = verticalWidth / RowEnemyQTD;
         enemys = new List<GameObject>();
         cooldown = fowardInterval;
         bulletSpeed = bulletSpeed * 100;
+        shootIncreaseVelocity = 10;
+        shootIncreaseCooldown = shootIncreaseVelocity;
+
+        Player = GameObject.FindGameObjectWithTag("Player");
 
         SpawnInitialEnemies();
     }
@@ -46,6 +54,7 @@ public class EnemySpawner : MonoBehaviour
         {
             for (int j = 0; j < ColEnemyQTD; j++)
             {
+                Debug.Log('a');
                 GameObject enemy = Instantiate(enemys_PreFab[i], gameObject.transform);
                 enemys.Add(enemy);
 
@@ -64,25 +73,29 @@ public class EnemySpawner : MonoBehaviour
         speed += speedIncrease * Time.deltaTime;
 
         quantEnemy = enemys.Count;
-    }
 
-    void Update()
-    {
-        cooldown -= Time.deltaTime;
-        shootColdown -= Time.deltaTime;
-        if (shootColdown <= 0)
+
+        //Cooldowns
+
+        shootIncreaseCooldown -= Time.deltaTime;
+        if (shootIncreaseCooldown <= 0)
         {
-            if (shootInterval >= 0.1f)
-            {
-                shootInterval -= -shootSpeedIncrease;
-            }
-            else
-            {
-                shootInterval = 0.1f;
-            }
-            shootColdown = shootInterval;
-            SpawnBullet();
+            shootInterval -= shootSpeedIncrease;
+            shootIncreaseCooldown = shootIncreaseVelocity;
         }
+
+        shootColdown -= Time.deltaTime;
+        if (enemys.Count > 0)
+        {
+            if (shootColdown <= 0)
+            {
+                shootColdown = shootInterval;
+                StartCoroutine(SpawnBullet());
+            }
+        }
+
+
+        cooldown -= Time.deltaTime;
         if (cooldown <= 0)
         {
             StartCoroutine(ChangeEnemyRol());
@@ -90,16 +103,37 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    void SpawnBullet()
+    IEnumerator SpawnBullet()
     {
         enemys.RemoveAll(enemy => enemy == null);
-        int enemyToShoot = UnityEngine.Random.Range(0, enemys.Count);
+        float closerEnemy = Vector3.Distance(enemys[0].transform.position, Player.transform.position);
+        int enemyToShoot = 0;
+        for (int i = 0; i < enemys.Count; i++)
+        {
+            float distance = Vector3.Distance(enemys[i].transform.position, Player.transform.position);
+            if (distance < closerEnemy)
+            {
+                closerEnemy = distance;
+                enemyToShoot = i;
+            }
+        }
 
         GameObject shoot = Instantiate(shoot_PreFab);
         shoot.transform.position = enemys[enemyToShoot].transform.position;
         shoot.transform.LookAt(-Vector3.forward + shoot.transform.position);
         shoot.GetComponent<ShootBehavior>().damage = bulletDamage;
         shoot.GetComponent<Rigidbody>().AddForce(-Vector3.forward * bulletSpeed);
+
+        yield return new WaitForSeconds(3);
+        try
+        {
+            Destroy(shoot.gameObject);
+        }
+        finally
+        {
+
+        }
+
     }
 
     IEnumerator ChangeEnemyRol()

@@ -500,7 +500,7 @@ GameObject:
   - component: {fileID: 801046414}
   m_Layer: 0
   m_Name: PlayerTest
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -723,12 +723,19 @@ MonoBehaviour:
   - {fileID: 2367833942240194599, guid: 5cb19baaea7bc9c478c171f7b956a6c4, type: 3}
   - {fileID: 2367833942240194599, guid: 303eef2114deac344aeeb0a57b50b044, type: 3}
   - {fileID: 2367833942240194599, guid: 303eef2114deac344aeeb0a57b50b044, type: 3}
+  shoot_PreFab: {fileID: 1649320449911468802, guid: f2b984084cf3a344c984fceedc9cf86f, type: 3}
   initialSpeed: 3
   speedIncrease: 0.2
   movementVariation: 3
   ColEnemyQTD: 11
   RowEnemyQTD: 5
-  secondsToDown: 20
+  bulletSpeed: 25
+  bulletDamage: 25
+  fowardInterval: 40
+  shootInterval: 2
+  shootSpeedIncrease: 0.1
+  quantEnemy: 0
+  verticalWidth: 8
 --- !u!54 &1169687746
 Rigidbody:
   m_ObjectHideFlags: 0
