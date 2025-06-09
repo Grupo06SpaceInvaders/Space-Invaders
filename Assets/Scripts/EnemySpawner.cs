@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using System;
@@ -44,16 +45,16 @@ public class EnemySpawner : MonoBehaviour
 
         Player = GameObject.FindGameObjectWithTag("Player");
 
-    private float spawnInterval = 0.01f;
+        SpawnInitialEnemies();
+    }
 
-    private int enemyCounter = 0;
-
-    void FixedUpdate()
+    void SpawnInitialEnemies()
     {
-        if (GlobalVariables.enemyKilled % 6==0)
+        for (int i = 0; i < RowEnemyQTD; i++)
         {
             for (int j = 0; j < ColEnemyQTD; j++)
             {
+                Debug.Log('a');
                 GameObject enemy = Instantiate(enemys_PreFab[i], gameObject.transform);
                 enemys.Add(enemy);
 
@@ -62,7 +63,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    void OnEnable()
+    private void FixedUpdate()
     {
         Rigidbody enemys_rigidBody = gameObject.GetComponent<Rigidbody>();
 
@@ -134,5 +135,13 @@ public class EnemySpawner : MonoBehaviour
         }
 
     }
+
+    IEnumerator ChangeEnemyRol()
+    {
+        for (int i = 0; i < enemys.Count; i++)
+        {
+            enemys[i].transform.position += new Vector3(0, 0, -verticalSpacing);
+        }
+        yield return new WaitForEndOfFrame();
     }
 }
