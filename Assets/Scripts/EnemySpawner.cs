@@ -65,6 +65,21 @@ public class EnemySpawner : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //Código para deixar o jogo infinito
+        if (GlobalVariables.enemyKilled % 55 == 0 && GlobalVariables.hordeNumber == 0)
+        {
+            GlobalVariables.hordeNumber = 1;
+            SpawnInitialEnemies();
+        }
+        else if (GlobalVariables.enemyKilled % 51 == 0 && GlobalVariables.enemyKilled % 55 != 0)
+        {
+            GlobalVariables.hordeNumber = 0;
+        }
+        else if (GlobalVariables.enemyKilled % 47 == 0 && GlobalVariables.enemyKilled % 55 != 0)
+        {
+            GlobalVariables.hordeNumber = 0;
+        }
+        //código para aumentar a velocidade gradualmente
         speed = speed + (speedIncrease * GlobalVariables.enemyKilled);
         Rigidbody enemys_rigidBody = gameObject.GetComponent<Rigidbody>();
 
