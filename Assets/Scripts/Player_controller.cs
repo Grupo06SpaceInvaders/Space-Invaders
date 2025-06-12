@@ -3,7 +3,6 @@ using UnityEngine;
 public class Player_Controller : MonoBehaviour
 {
     [SerializeField] private PlayerMovimento movimento;
-    [SerializeField] private PlayerMira mira;
     [SerializeField] private PlayerTiro tiro;
     [SerializeField] private PlayerVida vida;
 
@@ -12,7 +11,6 @@ public class Player_Controller : MonoBehaviour
         if (vida.EstaMorto())
         {
             movimento.enabled = false;
-            mira.enabled = false;
             tiro.enabled = false;
         }
     }

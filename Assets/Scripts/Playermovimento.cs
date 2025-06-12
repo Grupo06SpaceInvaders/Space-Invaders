@@ -6,7 +6,7 @@ public class PlayerMovimento : MonoBehaviour
     public float velocidade = 10f;
     private CharacterController controller;
 
-    public float limiteX = 70f;
+    float limiteX = 20;
 
     void Start()
     {
