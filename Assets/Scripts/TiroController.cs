@@ -11,7 +11,7 @@ public class TiroController : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(Vector3.up * velocidade * Time.deltaTime);
+        transform.Translate(Vector3.forward * velocidade * Time.deltaTime);
     }
 
     void OnCollisionEnter(Collision collision)
