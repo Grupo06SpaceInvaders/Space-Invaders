@@ -2,15 +2,10 @@ using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    public float health=25;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private float health = 25;
+    [SerializeField] private ScoreGiver scoreGiver;
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (health <= 0)
         {

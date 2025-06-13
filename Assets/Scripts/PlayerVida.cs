@@ -23,6 +23,7 @@ public class PlayerVida : MonoBehaviour
 
     void Morrer()
     {
+        ScoreManager.Instance.TrySaveAsHighscore();
         Debug.Log("Player morreu!");
         morto = true;
         gameObject.SetActive(false);
