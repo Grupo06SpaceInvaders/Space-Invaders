@@ -5,6 +5,7 @@ public class MenuControllerGame : MonoBehaviour
 {
     public GameObject mainmenu;
     public GameObject opcoes;
+    private int pausado;
 
     public void Start()
     {
@@ -12,16 +13,18 @@ public class MenuControllerGame : MonoBehaviour
     }
     public void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKey(KeyCode.Escape) &&  pausado == 0)
         {
             Time.timeScale = 0;
             mainmenu.SetActive(true);
+            pausado = 1;
         }
     }
     public void ResumirJogo()
     {
         mainmenu.SetActive(false);
         Time.timeScale = 1;
+        pausado = 0;
     }
 
     public void OpcoesJogo()
