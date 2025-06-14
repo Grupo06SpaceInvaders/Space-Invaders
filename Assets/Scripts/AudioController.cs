@@ -8,6 +8,8 @@ public class AudioController : MonoBehaviour
 
     public Slider masterSlider, musicSlider, effectsSlider;
 
+    private float dB;
+
     private void Start()
     {
         SavedVolumeSettings();
@@ -17,18 +19,18 @@ public class AudioController : MonoBehaviour
     {
         if (indice == 0) //Set master volume
         {
-            mixer.SetFloat("masterVol", masterSlider.value);
-            PlayerPrefs.SetFloat("masterVolPrefs", masterSlider.value);
+            mixer.SetFloat("masterVol", Mathf.Log10(masterSlider.value) * 20);
+            PlayerPrefs.SetFloat("masterVolPrefs", Mathf.Log10(masterSlider.value) * 20);
         }
         if(indice == 1) //Set music volume
         {
-            mixer.SetFloat("musicVol", musicSlider.value);
-            PlayerPrefs.SetFloat("musicVolPrefs", musicSlider.value);
+            mixer.SetFloat("musicVol", Mathf.Log10(musicSlider.value) * 20);
+            PlayerPrefs.SetFloat("musicVolPrefs", Mathf.Log10(musicSlider.value) * 20);
         }
         if (indice == 2) //Set effects volume
         {
-            mixer.SetFloat("effectsVol", effectsSlider.value);
-            PlayerPrefs.SetFloat("effectsVolPrefs", effectsSlider.value);
+            mixer.SetFloat("effectsVol", Mathf.Log10(effectsSlider.value) * 20);
+            PlayerPrefs.SetFloat("effectsVolPrefs", Mathf.Log10(effectsSlider.value) * 20);
         }
         PlayerPrefs.Save(); //Save changes on PlayerPrefs
     }
@@ -36,12 +38,15 @@ public class AudioController : MonoBehaviour
     private void SavedVolumeSettings()
     {
         mixer.SetFloat("masterVol", PlayerPrefs.GetFloat("masterVolPrefs", 0));
-        masterSlider.value = PlayerPrefs.GetFloat("masterVolPrefs", 0);
+        dB = PlayerPrefs.GetFloat("masterVolPrefs", 0);
+        masterSlider.value = Mathf.Pow(10f, dB / 20f);
 
         mixer.SetFloat("musicVol", PlayerPrefs.GetFloat("musicVolPrefs", 0));
-        musicSlider.value = PlayerPrefs.GetFloat("musicVolPrefs", 0);
+        dB = PlayerPrefs.GetFloat("musicVolPrefs", 0);
+        musicSlider.value = Mathf.Pow(10f, dB / 20f);
 
         mixer.SetFloat("effectsVol", PlayerPrefs.GetFloat("effectsVolPrefs", 0));
-        effectsSlider.value = PlayerPrefs.GetFloat("effectsVolPrefs", 0);
+        dB = PlayerPrefs.GetFloat("effectsVolPrefs", 0);
+        effectsSlider.value = Mathf.Pow(10f, dB / 20f);
     }
 }
