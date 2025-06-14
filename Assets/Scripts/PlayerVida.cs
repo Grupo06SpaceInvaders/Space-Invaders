@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerVida : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class PlayerVida : MonoBehaviour
     void Morrer()
     {
         ScoreManager.Instance.TrySaveAsHighscore();
+        SceneManager.LoadScene("Defeat");
         Debug.Log("Player morreu!");
         morto = true;
         gameObject.SetActive(false);
