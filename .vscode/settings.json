@@ -66,5 +66,5 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "Space-Invaders.sln"
+    "dotnet.defaultSolution": "Space Invaders.sln"
 }

@@ -2271,7 +2271,7 @@ MonoBehaviour:
   - {fileID: 2367833942240194599, guid: 303eef2114deac344aeeb0a57b50b044, type: 3}
   shoot_PreFab: {fileID: 1649320449911468802, guid: f2b984084cf3a344c984fceedc9cf86f, type: 3}
   initialSpeed: 3
-  speedIncrease: 0.1
+  speedIncrease: 0.001
   movementVariation: 3
   ColEnemyQTD: 11
   RowEnemyQTD: 5
@@ -2279,7 +2279,7 @@ MonoBehaviour:
   bulletDamage: 25
   fowardInterval: 40
   shootInterval: 2
-  shootSpeedIncrease: 0.1
+  shootSpeedIncrease: 0.001
   quantEnemy: 0
   verticalWidth: 8
 --- !u!54 &1169687746

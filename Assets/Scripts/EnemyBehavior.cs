@@ -7,9 +7,9 @@ public class EnemyBehavior : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("colidiu");
         if (other.gameObject.CompareTag("tiroPlayer"))
         {
+            GlobalVariables.enemyKilled+=1;
             Destroy(other.gameObject);
             Destroy(gameObject);
 
