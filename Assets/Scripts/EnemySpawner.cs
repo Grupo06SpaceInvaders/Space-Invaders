@@ -31,8 +31,12 @@ public class EnemySpawner : MonoBehaviour
     private Vector3 enemyMasterInitialPosition = new Vector3(0, 0, 0);
     private Vector3 directionMovement;
 
+    private AudioPlayer audioPlayer;
+
     private void Start()
     {
+        audioPlayer = GetComponent<AudioPlayer>();
+
         directionMovement = Vector3.left;
         speed = initialSpeed;
         horizontalSpacing = 34f / ColEnemyQTD;
@@ -139,6 +143,8 @@ public class EnemySpawner : MonoBehaviour
         shoot.transform.LookAt(-Vector3.forward + shoot.transform.position);
         shoot.GetComponent<ShootBehavior>().damage = bulletDamage;
         shoot.GetComponent<Rigidbody>().AddForce(-Vector3.forward * bulletSpeed);
+
+        audioPlayer.PlayAudio(0);
 
         yield return new WaitForSeconds(3);
         try
