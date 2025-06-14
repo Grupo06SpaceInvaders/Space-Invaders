@@ -15,4 +15,6 @@ public class PauseWhileEnabled : MonoBehaviour
         if  (Time.timeScale == 0) return;
         Time.timeScale = lastTimeScale;
     }
+
+
 }

@@ -5,6 +5,7 @@ public class MainMenuController : MonoBehaviour
 {
     public GameObject menuprincipal;
     public GameObject menuhighscore;
+    public GameObject menuopcoes;
 
     public void Jogar()
     {
@@ -19,6 +20,18 @@ public class MainMenuController : MonoBehaviour
     public void HighScoreMenuReturn()
     {
         menuhighscore.SetActive(false);
+        menuprincipal.SetActive(true);
+    }
+
+    public void Opcoes()
+    {
+        menuopcoes.SetActive(true);
+        menuprincipal.SetActive(false);
+    }
+    
+    public void SairOpcoes()
+    {
+        menuopcoes.SetActive(false);
         menuprincipal.SetActive(true);
     }
 
