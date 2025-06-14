@@ -2,15 +2,17 @@ using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    [SerializeField] private float health = 1;
     [SerializeField] private ScoreGiver scoreGiver;
 
-    private void Update()
+
+    void OnTriggerEnter(Collider other)
     {
-        if (health <= 0)
+        Debug.Log("colidiu");
+        if (other.gameObject.CompareTag("tiroPlayer"))
         {
-            GlobalVariables.enemyKilled++;
-            Destroy(this.gameObject);
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+
         }
     }
 }

@@ -13,13 +13,5 @@ public class TiroController : MonoBehaviour
     {
         transform.Translate(Vector3.forward * velocidade * Time.deltaTime);
     }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (!collision.gameObject.CompareTag("Player"))
-        {
-            Destroy(this.gameObject);
-        }
-    }
 }
    

@@ -52,7 +52,7 @@ public class EnemySpawner : MonoBehaviour
         SpawnInitialEnemies();
     }
 
-    void SpawnInitialEnemies()
+    public void SpawnInitialEnemies()
     {
         for (int i = 0; i < RowEnemyQTD; i++)
         {
