@@ -1,35 +1,48 @@
 using System;
+using TMPro;
 using UnityEngine;
 
-public class ScoreManager : MonoBehaviourSingleton<ScoreManager>
+public class ScoreManager : MonoBehaviour
 {
-    private const string highscoreKey = "highscore";
-    private int score;
-   
-    public int Score
-    {
-        get => score;
-        set
-        {
-            score = Mathf.Max(value, 0);
-            OnScoreChange?.Invoke(score);
-        }
-    }
-    public int Highscore { get;  private set; }
+    public static ScoreManager Instance { get; private set; }
+    public static object GlobalVariables { get; internal set; }
 
-    public event Action<int> OnScoreChange;
+    private void Awake() 
+    { 
+        // If there is an instance, and it's not me, delete myself.
+        
+        if (Instance != null && Instance != this) 
+        { 
+            Destroy(this); 
+        } 
+        else 
+        { 
+            Instance = this; 
+        } 
+    }
+
+
+    private int score;
+    private int Highscore;
+    public TextMeshProUGUI scoreText;
 
     private void Start()
     {
-        Highscore = PlayerPrefs.GetInt(highscoreKey, 0);
+        Highscore = PlayerPrefs.GetInt("highscoreKey", 0);
+    }
+
+    public void ChangeScore(int value)
+    {
+        score += value;
+        scoreText.text = score.ToString();
     }
 
     public void TrySaveAsHighscore()
     {
         if (score > Highscore)
         {
-            Highscore = Score;
-            PlayerPrefs.SetInt(highscoreKey, Highscore);
-        } 
+            Highscore = score;
+            PlayerPrefs.SetInt("highscoreKey", Highscore);
+        }
     }
 }

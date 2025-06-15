@@ -4,6 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class ScoreDisplayer : MonoBehaviour
 {
+    // !! Nao entendi nada, entao so comentei e refiz de outra maneira usando o 'Enemy Behavior + Score Manager'
+
+    /*
     private TextMeshProUGUI scoreText;
 
     private void Awake()
@@ -22,4 +25,5 @@ public class ScoreDisplayer : MonoBehaviour
     {
         scoreText.text = score.ToString();
     }
+    */
 }

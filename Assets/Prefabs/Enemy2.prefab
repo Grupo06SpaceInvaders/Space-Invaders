@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a39b98b04f1332749a8dc20834587748, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreGiver: {fileID: 1548483636159984213}
+  score: 20
 --- !u!114 &1548483636159984213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,4 +135,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f917512f7001e40a68e7d062ce046a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: 10

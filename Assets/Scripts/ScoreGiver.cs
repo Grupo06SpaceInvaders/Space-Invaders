@@ -2,12 +2,16 @@
 
 public class ScoreGiver : MonoBehaviour
 {
+    // !! Nao entendi nada, entao so comentei e refiz de outra maneira usando o 'Enemy Behavior + Score Manager'
+
+
+    /*
     [SerializeField] private int score;
 
     [ContextMenu(nameof(GiveScore))]
     public void GiveScore()
     {
-        ScoreManager.Instance.Score += score;
+        ScoreManager.Instance.score += score;
     }
 
 #if UNITY_EDITOR
@@ -17,4 +21,5 @@ public class ScoreGiver : MonoBehaviour
         return UnityEditor.EditorApplication.isPlaying;
     }
 #endif
+*/
 }

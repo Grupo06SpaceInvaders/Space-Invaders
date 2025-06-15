@@ -13,5 +13,6 @@ public class TiroController : MonoBehaviour
     {
         transform.Translate(Vector3.forward * velocidade * Time.deltaTime);
     }
+    
 }
    
