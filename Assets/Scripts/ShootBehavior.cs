@@ -20,6 +20,7 @@ public class ShootBehavior : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Debug.Log(gameObject.name + " colidiu com " + other.gameObject.name);
+            Destroy(this.gameObject);
         }
     }
 }

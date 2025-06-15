@@ -3722,7 +3722,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -288.81458, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -4210,6 +4210,7 @@ GameObject:
   - component: {fileID: 2032713072}
   - component: {fileID: 2032713071}
   - component: {fileID: 2032713075}
+  - component: {fileID: 2032713076}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -4318,6 +4319,20 @@ MonoBehaviour:
   menuprincipal: {fileID: 117598814}
   menuhighscore: {fileID: 1913490106}
   menuopcoes: {fileID: 238370348}
+--- !u!114 &2032713076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032713070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d282220d5ec3a9d418bed2bdb0c93cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 0}
+  highScoreText: {fileID: 1850801317}
 --- !u!1 &2040473675
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,10 +25,12 @@ public class ScoreManager : MonoBehaviour
     private int score;
     private int Highscore;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI highScoreText; 
 
     private void Start()
     {
         Highscore = PlayerPrefs.GetInt("highscoreKey", 0);
+        UpdateHighScoreText();
     }
 
     public void ChangeScore(int value)
@@ -43,6 +45,12 @@ public class ScoreManager : MonoBehaviour
         {
             Highscore = score;
             PlayerPrefs.SetInt("highscoreKey", Highscore);
+            UpdateHighScoreText();
         }
+    }
+
+    private void UpdateHighScoreText()
+    {
+        highScoreText.text = "High Score: " + Highscore.ToString(); 
     }
 }

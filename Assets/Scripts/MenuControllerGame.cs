@@ -5,11 +5,14 @@ public class MenuControllerGame : MonoBehaviour
 {
     public GameObject mainmenu;
     public GameObject opcoes;
+    public GameObject youlose;
     private int pausado;
 
     public void Start()
     {
         Time.timeScale = 1;
+        youlose.SetActive(false);
+
     }
     public void Update()
     {

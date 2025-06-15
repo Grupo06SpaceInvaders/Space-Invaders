@@ -6,7 +6,7 @@ public class MainMenuController : MonoBehaviour
     public GameObject menuprincipal;
     public GameObject menuhighscore;
     public GameObject menuopcoes;
-
+    
     public void Jogar()
     {
         SceneManager.LoadScene(1);
